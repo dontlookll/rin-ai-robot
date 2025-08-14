@@ -1,0 +1,30 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Rin AI</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link href="/style.css" rel="stylesheet">
+</head>
+<body>
+  <div class="app">
+    <header>
+      <h1>Rin</h1>
+      <div class="toggles">
+        <label><input type="checkbox" id="ttsToggle" checked> Speak replies</label>
+        <button id="clearBtn" title="Clear memory">Clear</button>
+      </div>
+    </header>
+
+    <main id="chat"></main>
+
+    <footer>
+      <button id="micBtn" title="Hold to talk">🎤</button>
+      <input id="msg" placeholder="Type a message…" autofocus />
+      <button id="sendBtn">Send</button>
+    </footer>
+  </div>
+
+  <script src="/app.js"></script>
+</body>
+</html>
