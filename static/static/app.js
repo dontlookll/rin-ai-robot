@@ -91,3 +91,34 @@ micBtn.onmouseup = () => { if (recognizer) recognizer.stop(); };
     }
   } catch {}
 })();
+sendBtn.addEventListener("click", async () => {
+    const userText = input.value.trim();
+    if (!userText) return;
+
+    // Show the user's message
+    addMsg("user", userText);
+    input.value = "";
+
+    try {
+        // ⬅️ Replace with your actual Render link + route
+        const res = await fetch("https://rin-ai-robot.onrender.com", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({ text: userText })
+        });
+
+        const data = await res.json();
+
+        // Show the bot's reply
+        if (data.reply) {
+            addMsg("assistant", data.reply);
+        } else {
+            addMsg("assistant", "⚠️ No reply from server");
+        }
+    } catch (err) {
+        console.error("Error talking to backend:", err);
+        addMsg("assistant", "❌ Error connecting to server");
+    }
+});
