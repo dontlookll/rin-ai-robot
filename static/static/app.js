@@ -149,13 +149,12 @@ sendBtn.addEventListener("click", async () => {
         addMsg("assistant", "❌ Error connecting to server");
     }
 });
-sendBtn.addEventListener("click", () => {
-  send(input.value);
-  input.value = "";
-});
-input.addEventListener("keydown", (e) => {
-  if (e.key === "Enter") {
+window.addEventListener("DOMContentLoaded", () => {
+  const sendBtn = document.getElementById("sendBtn");
+
+  sendBtn.addEventListener("click", () => {
+    console.log("Send button clicked");
     send(input.value);
     input.value = "";
-  }
+  });
 });
