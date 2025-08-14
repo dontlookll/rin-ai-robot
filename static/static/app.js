@@ -21,6 +21,33 @@ function addMsg(role, text) {
 }
 
 async function send(text) {
+  if (!text.trim()) return; // Don't send empty messages
+
+  addMsg("user", text); // Show the user's message immediately
+
+  const uid = localStorage.getItem("rin_uid");
+
+  try {
+    const r = await fetch("/api/chat", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ text, uid })
+    });
+
+    const data = await r.json();
+
+    if (data.error) {
+      console.error("Server error:", data.error);
+      addMsg("assistant", "(Error: " + data.error + ")");
+      return;
+    }
+
+    addMsg("assistant", data.reply || "(No response)");
+  } catch (err) {
+    console.error("Network error:", err);
+    addMsg("assistant", "(Network error)");
+  }
+}
   if (!text.trim()) return;
   addMsg("user", text);
   input.value = "";
@@ -121,4 +148,14 @@ sendBtn.addEventListener("click", async () => {
         console.error("Error talking to backend:", err);
         addMsg("assistant", "❌ Error connecting to server");
     }
+});
+sendBtn.addEventListener("click", () => {
+  send(input.value);
+  input.value = "";
+});
+input.addEventListener("keydown", (e) => {
+  if (e.key === "Enter") {
+    send(input.value);
+    input.value = "";
+  }
 });
