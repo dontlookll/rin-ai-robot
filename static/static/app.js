@@ -19,7 +19,7 @@ function addMsg(role, text) {
   chat.appendChild(div);
   chat.scrollTop = chat.scrollHeight;
 }
-
+console.log("Send function running:", text);
 async function send(text) {
   if (!text.trim()) return; // Don't send empty messages
 
